@@ -25,6 +25,16 @@ body {
     width: 600px;
     height: 600px;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.limit {
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    border: 8px solid rgb(39, 195, 206);
 }
 
 #cursor {

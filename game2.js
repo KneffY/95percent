@@ -76,7 +76,7 @@ document.addEventListener('click', event => {
 document.addEventListener('keydown', event => {
     // start creating enemies when pressing p
     if (event.code === 'KeyP') {
-        enemiesStart = 1;
+        enemiesStart == 0 ? enemiesStart = 1 : enemiesStart = 0;
     };
 });
 
@@ -135,23 +135,25 @@ setInterval(() => {
         createNewEnemy();
     };
     // move all enemies
-    let enemies = document.querySelectorAll(".enemy");
-    for (let j = 0; j < enemies.length; j++) {
-        let enemyVec = vectorTo (parseFloat(enemies[j].style.left), parseFloat(enemies[j].style.top), parseFloat(player.style.left), parseFloat(player.style.top));
-        let enemyAngle = -angleToPoint (enemyVec);
-        let enemyMod = Math.sqrt(enemyVec[0]**2 + enemyVec[1]**2);
-        enemyVec[0] =  enemyVec[0]/enemyMod;
-        enemyVec[1] = enemyVec[1]/enemyMod;
-        enemies[j].style.left = (parseFloat(enemies[j].style.left) + enemyVec[0]*3) + "px";
-        enemies[j].style.top = (parseFloat(enemies[j].style.top) - enemyVec[1]*3) + "px";
-        enemies[j].style.transform = "rotate(" + enemyAngle + "rad)";
-        // check for collition
-        if (inRadio(parseFloat(enemies[j].style.left),parseFloat(enemies[j].style.top),parseFloat(bullet.style.left),parseFloat(bullet.style.top), 15)) {
-            // enemies[j].style.color = "rgb(39, 195, 206)";
-        } else {
-            enemies[j].style.display = "none";
+    if (enemiesStart == 1) {
+        let enemies = document.querySelectorAll(".enemy");
+        for (let j = 0; j < enemies.length; j++) {
+            let enemyVec = vectorTo (parseFloat(enemies[j].style.left), parseFloat(enemies[j].style.top), parseFloat(player.style.left), parseFloat(player.style.top));
+            let enemyAngle = -angleToPoint (enemyVec);
+            let enemyMod = Math.sqrt(enemyVec[0]**2 + enemyVec[1]**2);
+            enemyVec[0] =  enemyVec[0]/enemyMod;
+            enemyVec[1] = enemyVec[1]/enemyMod;
+            enemies[j].style.left = (parseFloat(enemies[j].style.left) + enemyVec[0]*3) + "px";
+            enemies[j].style.top = (parseFloat(enemies[j].style.top) - enemyVec[1]*3) + "px";
+            enemies[j].style.transform = "rotate(" + enemyAngle + "rad)";
+            // check for collition
+            if (inRadio(parseFloat(enemies[j].style.left),parseFloat(enemies[j].style.top),parseFloat(bullet.style.left),parseFloat(bullet.style.top), 15)) {
+                // enemies[j].style.color = "rgb(39, 195, 206)";
+            } else {
+                enemies[j].style.display = "none";
+            }
         }
-    }
+    };
     // move bullet
     let bulletShootVec = vectorTo (parseFloat(player.style.left) + 15, parseFloat(player.style.top) + 15, lastClick.x, lastClick.y);
     let bMod = Math.sqrt(bulletShootVec[0]**2 + bulletShootVec[1]**2);
