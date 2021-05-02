@@ -8,6 +8,8 @@ let screenObj = {x: window.innerWidth / 2, y: window.innerHeight / 2};
 let lastClick = {x: 0, y: 0};
 let intervalVar = 0;
 let enemiesStart = 0;
+let playerOut = 0;
+let playerOutVar = 0;
 
 // FUNCTIONS
 let inRadio = (centroX, centroY, x, y, r) => {
@@ -59,6 +61,12 @@ let createNewEnemy = () => {
 };
 
 // EVENTS
+document.addEventListener('keydown', event => {
+    if (event.code === 'KeyR') {
+        window.location.reload();
+    };
+});
+
 document.addEventListener('click', event => {
     // bullet goes to player
     bullet.style.left = (parseFloat(player.style.left) + 15) + "px";
@@ -137,6 +145,7 @@ document.addEventListener('keydown', event => {
 });
 
 setInterval(() => {
+    playerOut += playerOutVar;
     intervalVar++
     // create enemy every half second
     if (intervalVar % 40 == 0 && enemiesStart == 1) {
@@ -154,11 +163,26 @@ setInterval(() => {
             enemies[j].style.left = (parseFloat(enemies[j].style.left) + enemyVec[0]*3) + "px";
             enemies[j].style.top = (parseFloat(enemies[j].style.top) - enemyVec[1]*3) + "px";
             enemies[j].style.transform = "rotate(" + enemyAngle + "rad)";
-            // check for collition
+            // check for bullet collition
             if (inRadio(parseFloat(enemies[j].style.left),parseFloat(enemies[j].style.top),parseFloat(bullet.style.left),parseFloat(bullet.style.top), 25)) {
                 // enemies[j].style.color = "rgb(39, 195, 206)";
             } else {
                 enemies[j].style.display = "none";
+            }
+            // check for loosing collition
+            if (inRadio(parseFloat(player.style.left + 25),parseFloat(player.style.top + 25),parseFloat(enemies[j].style.left),parseFloat(enemies[j].style.top), 15)) {
+                // enemies[j].style.color = "rgb(39, 195, 206)";
+            } else {
+                // making sure the enemy exist
+                if (enemies[j].style.display != "none") {
+                    enemiesStart = 0;
+                    player.style.animationName = "getDestroy";
+                    player.style.animationDuration = "2s";
+                    player.style.animationTimingFunction = "ease-out";
+                    player.style.animationIterationCount = 1;
+                    playerOutVar = 1;
+                }
+                
             }
         }
     };
@@ -169,4 +193,10 @@ setInterval(() => {
     bulletShootVec[1] = bulletShootVec[1]/bMod;
     bullet.style.left = (parseFloat(bullet.style.left) + bulletShootVec[0]*50) + "px";
     bullet.style.top = (parseFloat(bullet.style.top) - bulletShootVec[1]*50) + "px";
+
+    // delete player
+    if (playerOut == 80) {
+        player.style.display = "none";
+        bullet.style.display = "none";
+    };
 }, 25);
