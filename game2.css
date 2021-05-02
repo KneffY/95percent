@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-#cursor, #player, .enemy, #bullet {
+#cursor, #player, .enemy, #bullet, #cursorShadow {
     z-index: 2;
     position: absolute;
     top: 0;
@@ -18,10 +18,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    animation-name: mainColorChangesPage;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 .stage {
-    background-color:rgb(183, 233, 236);
+    background-color:rgb(255, 255, 255);
     width: 600px;
     height: 600px;
     border-radius: 50%;
@@ -34,26 +38,99 @@ body {
     width: 520px;
     height: 520px;
     border-radius: 50%;
-    border: 8px solid rgb(39, 195, 206);
+    border: 8px solid #86e3ce;
+    animation-name: mainColorChangesBorder;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 #cursor {
     width: 60px;
     height: 60px;
     border-radius: 50px;
-    border: 4px solid rgb(183, 233, 236);
+    border: 4px solid rgb(255, 255, 255);
+    animation-name: mainColorChangesCursor;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#cursorShadow {
+    display: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    border: 4px solid rgb(255, 255, 255);
 }
 
 #player {
     font-size: 50px;
-    color: rgb(39, 195, 206);
+    color: #86e3ce;
+    animation-name: mainColorChangesIcons;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 .enemy {
     font-size: 34px;
+    animation-name: mainColorChangesIcons;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 #bullet {
     font-size: 30px;
-    color: rgb(39, 195, 206);
+    color: #86e3ce;
+    animation-name: mainColorChangesIcons;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes secondColorChanges {
+    0% {background-color: #86e3ce;}
+    20% {background-color: #d0e6a5;}
+    40% {background-color: #ffdd94;}
+    60% {background-color: #fa897b;}
+    80% {background-color: #ccabd8;}
+    100% {background-color: #86e3ce;}
+}
+
+@keyframes mainColorChangesIcons {
+    0% {color: #86e3ce;}
+    20% {color: #d0e6a5;}
+    40% {color: #ffdd94;}
+    60% {color: #fa897b;}
+    80% {color: #ccabd8;}
+    100% {color: #86e3ce;}
+}
+
+@keyframes mainColorChangesPage {
+    0% {background-color: #86e3ce;}
+    20% {background-color: #d0e6a5;}
+    40% {background-color: #ffdd94;}
+    60% {background-color: #fa897b;}
+    80% {background-color: #ccabd8;}
+    100% {background-color: #86e3ce;}
+}
+
+@keyframes mainColorChangesBorder {
+    0% {border: 8px solid #86e3ce;}
+    20% {border: 8px solid#d0e6a5;}
+    40% {border: 8px solid#ffdd94;}
+    60% {border: 8px solid#fa897b;}
+    80% {border: 8px solid#ccabd8;}
+    100% {border: 8px solid#86e3ce;}
+}
+
+@keyframes mainColorChangesCursor {
+    0% {border: 4px solid #86e3ce;}
+    20% {border: 4px solid#d0e6a5;}
+    40% {border: 4px solid#ffdd94;}
+    60% {border: 4px solid#fa897b;}
+    80% {border: 4px solid#ccabd8;}
+    100% {border: 4px solid#86e3ce;}
 }

@@ -1,5 +1,6 @@
 // ELEMENTS
 let cursor = document.getElementById('cursor');
+let cursorShadow = document.getElementById('cursorShadow');
 let player = document.getElementById('player');
 let bullet = document.getElementById('bullet');
 let mouse = {x: 0, y: 0};
@@ -98,11 +99,13 @@ document.addEventListener ("mousemove", (event) => {
     // move cursor div
     cursor.style.left = (mouse.x - 30) + "px";
     cursor.style.top = (mouse.y - 30) + "px";
+    cursorShadow.style.left = (mouse.x - 30) + "px";
+    cursorShadow.style.top = (mouse.y - 30) + "px";
     // change cursor color
     if (inRadio(screenObj.x, screenObj.y, mouse.x, mouse.y, 300)) {
-        cursor.style.border = "4px solid rgb(183, 233, 236)";
+        cursorShadow.style.display = "block";
     } else {
-        cursor.style.border = "4px solid rgb(39, 195, 206)"; 
+        cursorShadow.style.display = "none";
     }
     // spin player
     vecToSpin = vectorTo (parseFloat(player.style.left), parseFloat(player.style.top), mouse.x, mouse.y);
@@ -127,7 +130,7 @@ document.addEventListener('keydown', event => {
     };
     // change player color
     if (inRadio(screenObj.x - 25, screenObj.y - 25, parseFloat(player.style.left), parseFloat(player.style.top), 300)) {
-        player.style.color = "rgb(183, 233, 236)";
+        player.style.color = "rgb(255, 255, 255)";
     } else {
         player.style.color = "rgb(39, 195, 206)";
     }
@@ -152,7 +155,7 @@ setInterval(() => {
             enemies[j].style.top = (parseFloat(enemies[j].style.top) - enemyVec[1]*3) + "px";
             enemies[j].style.transform = "rotate(" + enemyAngle + "rad)";
             // check for collition
-            if (inRadio(parseFloat(enemies[j].style.left),parseFloat(enemies[j].style.top),parseFloat(bullet.style.left),parseFloat(bullet.style.top), 15)) {
+            if (inRadio(parseFloat(enemies[j].style.left),parseFloat(enemies[j].style.top),parseFloat(bullet.style.left),parseFloat(bullet.style.top), 25)) {
                 // enemies[j].style.color = "rgb(39, 195, 206)";
             } else {
                 enemies[j].style.display = "none";
