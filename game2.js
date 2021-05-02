@@ -117,8 +117,13 @@ document.addEventListener('keydown', event => {
     vec[1] = vec[1]/vecMod;
     // move player ohhyeah
     if (event.code === 'KeyM') {
-        player.style.left = (parseFloat(player.style.left) + vec[0]*10) + "px";
-        player.style.top = (parseFloat(player.style.top) - vec[1]*10) + "px";
+        // move only if new pos is inside limit zone
+        if (inRadio(screenObj.x - 25, screenObj.y - 25, parseFloat(player.style.left) + vec[0]*10, parseFloat(player.style.top) - vec[1]*10, 260)) {
+            {}
+        } else {
+            player.style.left = (parseFloat(player.style.left) + vec[0]*10) + "px";
+            player.style.top = (parseFloat(player.style.top) - vec[1]*10) + "px";
+        };        
     };
     // change player color
     if (inRadio(screenObj.x - 25, screenObj.y - 25, parseFloat(player.style.left), parseFloat(player.style.top), 300)) {
