@@ -73,11 +73,11 @@ document.addEventListener('click', event => {
     bullet.style.top = (parseFloat(player.style.top) + 15) + "px";
     // updates cursor last click possition
     lastClick = {
-        x: parseFloat(cursor.style.left),
-        y: parseFloat(cursor.style.top)
+        x: parseFloat(cursor.style.left) + 30,
+        y: parseFloat(cursor.style.top) + 30
     };
     // sets bullet's angle
-    let bulletVec = vectorTo (parseFloat(player.style.left) + 15, parseFloat(player.style.top) + 15, lastClick.x, lastClick.y);
+    let bulletVec = vectorTo (parseFloat(player.style.left) + 25, parseFloat(player.style.top) + 25, lastClick.x, lastClick.y);
     let bulletAngle = -angleToPoint (bulletVec);
     bullet.style.transform = "rotate(" + bulletAngle + "rad)";
 });
@@ -116,7 +116,7 @@ document.addEventListener ("mousemove", (event) => {
         cursorShadow.style.display = "none";
     }
     // spin player
-    vecToSpin = vectorTo (parseFloat(player.style.left), parseFloat(player.style.top), mouse.x, mouse.y);
+    vecToSpin = vectorTo (parseFloat(player.style.left)+25, parseFloat(player.style.top)+25, mouse.x, mouse.y);
     angleToSpin = -angleToPoint (vecToSpin) + Math.PI/4;
     player.style.transform = "rotate(" + angleToSpin + "rad)";
 });
@@ -186,17 +186,19 @@ setInterval(() => {
             }
         }
     };
-    // move bullet
-    let bulletShootVec = vectorTo (parseFloat(player.style.left) + 15, parseFloat(player.style.top) + 15, lastClick.x, lastClick.y);
-    let bMod = Math.sqrt(bulletShootVec[0]**2 + bulletShootVec[1]**2);
-    bulletShootVec[0] = bulletShootVec[0]/bMod;
-    bulletShootVec[1] = bulletShootVec[1]/bMod;
-    bullet.style.left = (parseFloat(bullet.style.left) + bulletShootVec[0]*50) + "px";
-    bullet.style.top = (parseFloat(bullet.style.top) - bulletShootVec[1]*50) + "px";
-
     // delete player
     if (playerOut == 80) {
         player.style.display = "none";
         bullet.style.display = "none";
     };
 }, 25);
+
+setInterval (() => {
+    // move bullet
+    let bulletShootVec = vectorTo (parseFloat(player.style.left) + 25, parseFloat(player.style.top) + 25, lastClick.x, lastClick.y);
+    let bMod = Math.sqrt(bulletShootVec[0]**2 + bulletShootVec[1]**2);
+    bulletShootVec[0] = bulletShootVec[0]/bMod;
+    bulletShootVec[1] = bulletShootVec[1]/bMod;
+    bullet.style.left = (parseFloat(bullet.style.left) + bulletShootVec[0]*8) + "px";
+    bullet.style.top = (parseFloat(bullet.style.top) - bulletShootVec[1]*8) + "px";
+}, 5)
