@@ -199,6 +199,13 @@ setInterval (() => {
     let bMod = Math.sqrt(bulletShootVec[0]**2 + bulletShootVec[1]**2);
     bulletShootVec[0] = bulletShootVec[0]/bMod;
     bulletShootVec[1] = bulletShootVec[1]/bMod;
-    bullet.style.left = (parseFloat(bullet.style.left) + bulletShootVec[0]*8) + "px";
-    bullet.style.top = (parseFloat(bullet.style.top) - bulletShootVec[1]*8) + "px";
+    // move only if bullef exist
+    if (bullet.style.left != "0px") {
+        bullet.style.left = (parseFloat(bullet.style.left) + bulletShootVec[0]*8) + "px";
+        bullet.style.top = (parseFloat(bullet.style.top) - bulletShootVec[1]*8) + "px";
+    } 
+    if (inRadio(screenObj.x, screenObj.y, parseFloat(bullet.style.left)+15,parseFloat(bullet.style.top)+15,300)) {
+        bullet.style.left = "0px";
+        bullet.style.top = "0px";
+    }
 }, 5)
