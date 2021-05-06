@@ -3,6 +3,7 @@ let cursor = document.getElementById('cursor');
 let cursorShadow = document.getElementById('cursorShadow');
 let player = document.getElementById('player');
 let bullet = document.getElementById('bullet');
+let lifePoint = document.getElementById('life');
 let mouse = {x: 0, y: 0};
 let screenObj = {x: window.innerWidth / 2, y: window.innerHeight / 2};
 let lastClick = {x: 0, y: 0};
@@ -10,6 +11,8 @@ let intervalVar = 0;
 let enemiesStart = 0;
 let playerOut = 0;
 let playerOutVar = 0;
+let lifeConst = 0;
+let changeLife = 0;
 
 // FUNCTIONS
 let inRadio = (centroX, centroY, x, y, r) => {
@@ -28,6 +31,21 @@ let randomEnemyPos = (centerX, centerY, r) => {
     let x = Math.cos(angle)*r;
     let y = Math.sin(angle)*r;
     return [x + centerX, y + centerY];
+};
+
+let randomLifePos = (cenX, cenY, r) => {
+    while (true) {
+        let xFac = Math.floor((Math.random() * 100) + 1);
+        let xAdd = (2*r*xFac)/100;
+        let yFac = Math.floor((Math.random() * 100) + 1);
+        let yAdd = (2*r*yFac)/100;
+        if (inRadio(cenX,cenY,cenX-r+xAdd,cenY-r+yAdd, r)) {
+            // outside actually
+        } else {
+            return [cenX-r+xAdd-15,cenY-r+yAdd-15];
+        }
+    }
+    
 };
 
 let angleToPoint = (vector) => {
@@ -68,6 +86,8 @@ document.addEventListener('keydown', event => {
 });
 
 document.addEventListener('click', event => {
+    // set first life point
+    // lifeConst++;
     // bullet goes to player
     bullet.style.left = (parseFloat(player.style.left) + 15) + "px";
     bullet.style.top = (parseFloat(player.style.top) + 15) + "px";
@@ -207,5 +227,24 @@ setInterval (() => {
     if (inRadio(screenObj.x, screenObj.y, parseFloat(bullet.style.left)+15,parseFloat(bullet.style.top)+15,300)) {
         bullet.style.left = "0px";
         bullet.style.top = "0px";
+    }
+    // check for life point collition
+    if (lifeConst == 1) {
+        let firstLifePos = randomLifePos (screenObj.x, screenObj.y, 250);
+        lifePoint.style.left = (firstLifePos[0] + 15) + "px";
+        lifePoint.style.top = (firstLifePos[1] + 15) + "px";
+        lifeConst++;
+    }
+    // check for player life collition
+    if (inRadio (parseFloat(player.style.left)+25,parseFloat(player.style.top)+25,parseFloat(lifePoint.style.left)+15,parseFloat(lifePoint.style.top)+15,20)) {
+        // out
+        changeLife = 0;
+    } else {
+        if (changeLife == 0) {
+            let lifePos = randomLifePos (screenObj.x, screenObj.y, 240);
+            lifePoint.style.left = (lifePos[0]) + "px";
+            lifePoint.style.top = (lifePos[1]) + "px";
+            changeLife = 1;
+        }
     }
 }, 5)

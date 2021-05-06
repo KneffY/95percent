@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-#cursor, #player, .enemy, #bullet, #cursorShadow {
+#cursor, #player, .enemy, #bullet, #cursorShadow, #life {
     z-index: 2;
     position: absolute;
     top: 0;
@@ -82,6 +82,15 @@ body {
 }
 
 #bullet {
+    font-size: 30px;
+    color: #86e3ce;
+    animation-name: mainColorChangesIcons;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+#life {
     font-size: 30px;
     color: #86e3ce;
     animation-name: mainColorChangesIcons;
