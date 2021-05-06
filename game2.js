@@ -4,6 +4,8 @@ let cursorShadow = document.getElementById('cursorShadow');
 let player = document.getElementById('player');
 let bullet = document.getElementById('bullet');
 let lifePoint = document.getElementById('life');
+let percentDisplay = document.getElementById('percent');
+let scoreDisplay = document.getElementById('score');
 let mouse = {x: 0, y: 0}; // dinamic mouse possition
 let screenObj = {x: window.innerWidth / 2, y: window.innerHeight / 2}; // dinamic centre of screen
 let lastClick = {x: 0, y: 0}; // last mouese possition when click
@@ -12,6 +14,10 @@ let enemiesStart = 0; // control pause/play mecha and wen to create new enemy
 let playerOut = 0; // control when the player dies
 let playerOutVar = 0; // cauxiliar var for when player dies
 let changeLife = 0; // control when to create a new life point
+let percentVal = 100; // probability of survive a shoot
+let scoreVal = -1; // actual score
+let chanceOfDie = 0; // probability to die shooting
+let mustDie = 0; // auxiliar var to die
 
 // FUNCTIONS
 let inRadio = (centroX, centroY, x, y, r) => {
@@ -85,8 +91,8 @@ document.addEventListener('keydown', event => {
 });
 
 document.addEventListener('click', event => {
-    // set first life point
-    // lifeConst++;
+    // rest one percent per click
+    percentVal--;
     // bullet goes to player
     bullet.style.left = (parseFloat(player.style.left) + 15) + "px";
     bullet.style.top = (parseFloat(player.style.top) + 15) + "px";
@@ -99,6 +105,11 @@ document.addEventListener('click', event => {
     let bulletVec = vectorTo (parseFloat(player.style.left) + 25, parseFloat(player.style.top) + 25, lastClick.x, lastClick.y);
     let bulletAngle = -angleToPoint (bulletVec);
     bullet.style.transform = "rotate(" + bulletAngle + "rad)";
+    // check if shooting kills player
+    chanceOfDie = Math.floor((Math.random() * 100) + 1);
+    if (chanceOfDie > percentVal) {
+        mustDie = 1;
+    }
 });
 
 document.addEventListener('keydown', event => {
@@ -205,6 +216,15 @@ setInterval(() => {
             }
         }
     };
+    // activate death animation
+    if (mustDie == 1) {
+        enemiesStart = 0;
+        player.style.animationName = "getDestroy";
+        player.style.animationDuration = "2s";
+        player.style.animationTimingFunction = "ease-out";
+        player.style.animationIterationCount = 1;
+        playerOutVar = 1;
+    }
     // delete player
     if (playerOut == 80) {
         player.style.display = "none";
@@ -237,6 +257,14 @@ setInterval (() => {
             lifePoint.style.left = (lifePos[0]) + "px";
             lifePoint.style.top = (lifePos[1]) + "px";
             changeLife = 1;
+            percentVal = 100;
+            scoreVal++;
         }
     }
+    // Change percent display
+    percentDisplay.innerText = percentVal;
+    // set and change score display
+    scoreDisplay.style.top = (screenObj.y - 150) + "px";
+    scoreDisplay.style.left = (screenObj.x - 100) + "px";
+    scoreDisplay.innerText = scoreVal;
 }, 5)
