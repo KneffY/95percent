@@ -4,15 +4,14 @@ let cursorShadow = document.getElementById('cursorShadow');
 let player = document.getElementById('player');
 let bullet = document.getElementById('bullet');
 let lifePoint = document.getElementById('life');
-let mouse = {x: 0, y: 0};
-let screenObj = {x: window.innerWidth / 2, y: window.innerHeight / 2};
-let lastClick = {x: 0, y: 0};
-let intervalVar = 0;
-let enemiesStart = 0;
-let playerOut = 0;
-let playerOutVar = 0;
-let lifeConst = 0;
-let changeLife = 0;
+let mouse = {x: 0, y: 0}; // dinamic mouse possition
+let screenObj = {x: window.innerWidth / 2, y: window.innerHeight / 2}; // dinamic centre of screen
+let lastClick = {x: 0, y: 0}; // last mouese possition when click
+let intervalVar = 0; // control time within intervals
+let enemiesStart = 0; // control pause/play mecha and wen to create new enemy
+let playerOut = 0; // control when the player dies
+let playerOutVar = 0; // cauxiliar var for when player dies
+let changeLife = 0; // control when to create a new life point
 
 // FUNCTIONS
 let inRadio = (centroX, centroY, x, y, r) => {
@@ -227,13 +226,6 @@ setInterval (() => {
     if (inRadio(screenObj.x, screenObj.y, parseFloat(bullet.style.left)+15,parseFloat(bullet.style.top)+15,300)) {
         bullet.style.left = "0px";
         bullet.style.top = "0px";
-    }
-    // check for life point collition
-    if (lifeConst == 1) {
-        let firstLifePos = randomLifePos (screenObj.x, screenObj.y, 250);
-        lifePoint.style.left = (firstLifePos[0] + 15) + "px";
-        lifePoint.style.top = (firstLifePos[1] + 15) + "px";
-        lifeConst++;
     }
     // check for player life collition
     if (inRadio (parseFloat(player.style.left)+25,parseFloat(player.style.top)+25,parseFloat(lifePoint.style.left)+15,parseFloat(lifePoint.style.top)+15,20)) {
